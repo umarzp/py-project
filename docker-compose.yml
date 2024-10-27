@@ -1,0 +1,22 @@
+version: '3.8'
+
+networks:
+  app:
+    driver: bridge
+
+services:
+  db:
+    build: db/
+    container_name: postgres
+    networks:
+      - app
+
+  django:
+    build: .
+    container_name: demo-app
+    ports:
+      - "8000:8000"
+    networks:
+      - app
+    depends_on:
+      - db  # List db as a dependency without additional mapping
